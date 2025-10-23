@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polleria_la_cabana_app/features/auth/presentation/ombording_screen.dart';
 import 'features/auth/presentation/login_screen.dart';
 import 'core/database/database_helper.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.brown,
       ),
-      home: LoginScreen(), // Arranca directamente en login
+      home: OnboardingScreen(), // Arranca directamente en login
     );
   }
 }
