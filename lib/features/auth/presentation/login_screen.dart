@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'register_screen.dart';
 import '../data/auth_repository.dart';
 import '../data/user_model.dart';
+import '../../home/presentation/home_screen.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -27,12 +29,18 @@ class _LoginScreenState extends State<LoginScreen> {
         SnackBar(content: Text('Bienvenido, ${user.nombreCompleto}')),
       );
       // Aquí irías a la pantalla principal de tu app
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
+      );
+
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Correo o contraseña incorrectos')),
       );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
