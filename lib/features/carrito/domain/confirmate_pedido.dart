@@ -5,10 +5,9 @@ class ConfirmarPedidoUseCase {
 
   ConfirmarPedidoUseCase(this.repository);
 
-  Future<int> execute({
-    required int idUsuario,
-    required String salsas,
-  }) async {
-    return await repository.confirmarPedido(idUsuario, salsas);
+  // Solo idUsuario, ningún otro parámetro
+  Future<int> execute(int idUsuario) async {
+    return await repository.confirmarPedido(idUsuario);
   }
 }
+

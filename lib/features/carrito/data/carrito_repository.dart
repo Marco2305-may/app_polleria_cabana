@@ -88,7 +88,7 @@ class CarritoRepository {
         ? (result.first['total'] as num).toDouble()
         : 0.0;
   }
-  Future<int> confirmarPedido(int idUsuario, String salsas) async {
+  Future<int> confirmarPedido(int idUsuario) async {
     final db = await dbHelper.database;
 
     // 1️⃣ Calcular total
@@ -100,7 +100,9 @@ class CarritoRepository {
       'id_usuario': idUsuario,
       'fecha': DateTime.now().toIso8601String(),
       'total': total,
-      'salsas': salsas,
+      'direccion': '',       // vacío por ahora
+      'metodo_pago': '',     // vacío por ahora
+      'estado': 'En camino', // opcional, puedes usar 'En camino' si quieres
     });
 
     // 3️⃣ Actualizar los ítems del carrito temporal con el nuevo idPedido
