@@ -38,4 +38,5 @@ class AuthRepository {
     );
     return result.isNotEmpty;
   }
+
 }

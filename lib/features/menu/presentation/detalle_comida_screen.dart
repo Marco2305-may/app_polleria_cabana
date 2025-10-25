@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data/comida_model.dart';
+import '../../carrito/data/carrito_model.dart';
+import '../../carrito/data/carrito_repository.dart';
 
 class DetalleComidaScreen extends StatefulWidget {
   final Comida comida;
@@ -13,9 +15,10 @@ class DetalleComidaScreen extends StatefulWidget {
 class _DetalleComidaScreenState extends State<DetalleComidaScreen> {
   int cantidad = 1;
 
-  // Lista de cremas disponibles
   final List<String> cremas = ['Mayonesa', 'Ají', 'Kétchup', 'Mostaza'];
   final Set<String> cremasSeleccionadas = {};
+
+  final carritoRepo = CarritoRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -83,14 +86,26 @@ class _DetalleComidaScreenState extends State<DetalleComidaScreen> {
                 minimumSize: const Size(double.infinity, 50),
                 backgroundColor: Colors.brown[700],
               ),
-              onPressed: () {
+              onPressed: () async {
+                // Crear el item de carrito
+                final item = CarritoItem(
+                  idCarrito: 0, // se autogenera en SQLite
+                  idPedido: 0,   // si aún no hay pedido, puedes usar 0 o crear un pedido temporal
+                  idComida: widget.comida.id,
+                  cantidad: cantidad,
+                  subtotal: widget.comida.precio * cantidad,
+
+                );
+
+                // Agregar a la base de datos
+                await carritoRepo.addItem(item);
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
                         'Agregado ${widget.comida.nombre} x$cantidad al carrito con cremas: ${cremasSeleccionadas.join(', ')}'),
                   ),
                 );
-                // Aquí podrías llamar al método para agregarlo a la tabla Carrito
               },
               icon: const Icon(Icons.shopping_cart),
               label: const Text('Pedir'),
@@ -101,3 +116,4 @@ class _DetalleComidaScreenState extends State<DetalleComidaScreen> {
     );
   }
 }
+

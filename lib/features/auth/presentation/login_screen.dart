@@ -2,6 +2,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'register_screen.dart';
 import '../data/auth_repository.dart';
 import '../data/user_model.dart';
@@ -25,6 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     if (user != null) {
+      //Guardar usuario logueado localmente
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('idUsuario', user.idUsuario!);
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Bienvenido, ${user.nombreCompleto}')),
       );

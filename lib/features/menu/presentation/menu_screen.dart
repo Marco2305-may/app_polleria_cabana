@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../carrito/presentation/carrito_screen.dart';
 import '../data/menu_repository.dart';
 import '../domain/get_comidas_usecase.dart';
 import '../data/comida_model.dart';
 import 'detalle_comida_screen.dart'; // Nuevo detalle
+
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -50,7 +52,10 @@ class _MenuScreenState extends State<MenuScreen> {
           IconButton(
             icon: const Icon(Icons.shopping_cart_outlined),
             onPressed: () {
-              // Aquí irá el acceso al carrito
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CarritoScreen()),
+              );
             },
           ),
         ],
@@ -63,7 +68,7 @@ class _MenuScreenState extends State<MenuScreen> {
               controller: _searchController,
               onChanged: _filterComidas,
               decoration: InputDecoration(
-                hintText: 'Buscar comida...',
+                hintText: 'Buscar ',
                 prefixIcon: const Icon(Icons.search),
                 filled: true,
                 fillColor: Colors.white,
