@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:polleria_la_cabana_app/features/pedidos/presentation/pedido_screen.dart';
 import 'package:polleria_la_cabana_app/features/pedidos/presentation/widgets/direcion_map_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../pedidos/data/pedido_repository.dart';
@@ -105,7 +106,14 @@ class _TicketScreenState extends State<TicketScreen> {
             Expanded(
               child: DireccionMapWidget(
                 onDireccionSeleccionada: (direccion, latLng) {
-                  print('Dirección seleccionada: $direccion');
+                  setState(() {
+                    _direccionController.text = direccion;
+                    _mapCenter = latLng;
+                    _marker = Marker(
+                      markerId: const MarkerId('destino'),
+                      position: _mapCenter,
+                    );
+                  });
                 },
               ),
             ),
@@ -156,7 +164,11 @@ class _TicketScreenState extends State<TicketScreen> {
                           'Pedido confirmado. El motorizado llegará con POS para pagar.')),
                 );
 
-                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => const PedidoScreen()),
+                );
+
               },
               child: const Text('Confirmar envío'),
             ),

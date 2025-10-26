@@ -52,4 +52,16 @@ class PedidoRepository {
       whereArgs: [idPedido],
     );
   }
+
+  // Obtener todos los pedidos (sin filtrar usuario, opcional)
+  Future<List<Map<String, dynamic>>> obtenerPedidos() async {
+    final db = await dbHelper.database;
+    return await db.query('Pedido');
+  }
+
+// Eliminar pedido completamente (si cancelas)
+  Future<void> eliminarPedido(int idPedido) async {
+    final db = await dbHelper.database;
+    await db.delete('Pedido', where: 'id_pedido = ?', whereArgs: [idPedido]);
+  }
 }

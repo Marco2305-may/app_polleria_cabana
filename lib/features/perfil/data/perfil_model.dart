@@ -1,12 +1,12 @@
 class Usuario {
-  int? idUsuario; // opcional
+  int idUsuario;
   String nombreCompleto;
   String correo;
   String? telefono;
   String contrasena;
 
   Usuario({
-    this.idUsuario,
+    required this.idUsuario,
     required this.nombreCompleto,
     required this.correo,
     this.telefono,
@@ -14,15 +14,13 @@ class Usuario {
   });
 
   Map<String, dynamic> toMap() {
-    final map = <String, dynamic>{};
-    if (idUsuario != null) {
-      map['id_usuario'] = idUsuario;
-    }
-    map['nombre_completo'] = nombreCompleto;
-    map['correo'] = correo;
-    map['telefono'] = telefono;
-    map['contrasena'] = contrasena;
-    return map;
+    return {
+      'id_usuario': idUsuario,
+      'nombre_completo': nombreCompleto,
+      'correo': correo,
+      'telefono': telefono,
+      'contrasena': contrasena,
+    };
   }
 
   factory Usuario.fromMap(Map<String, dynamic> map) {
@@ -35,4 +33,5 @@ class Usuario {
     );
   }
 }
+
 

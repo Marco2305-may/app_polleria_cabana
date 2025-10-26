@@ -7,9 +7,14 @@ class AuthRepository {
 
   // Registrar usuario
   Future<bool> registerUser(Usuario user) async {
-    final db = await dbHelper.database;
-    int id = await db.insert('Usuario', user.toMap());
-    return id > 0; // true si se insertó correctamente, false si hubo error
+    try {
+      final db = await dbHelper.database;
+      int id = await db.insert('Usuario', user.toMap());
+      return id > 0;
+    } catch (e) {
+      print('Error al registrar usuario: $e');
+      return false;
+    }
   }
 
   // Login: retorna Usuario si correo y contraseña son correctos
@@ -38,5 +43,6 @@ class AuthRepository {
     );
     return result.isNotEmpty;
   }
+
 
 }
