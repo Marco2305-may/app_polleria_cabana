@@ -27,7 +27,9 @@ class _ReservacionScreenState extends State<ReservacionScreen> {
 
   Future<void> _initDbAndLoad() async {
     final db = await DatabaseHelper.instance.database; // <- usa polleria.db
-    final usuarioRepo = UsuarioRepository(db: db);
+    repo = ReservacionRepository(db: db); // <--- ¡FALTA ESTO!
+
+    await _cargarReservas();
 
     // Ahora puedes usar usuarioRepo para obtener usuarios, reservaciones, etc.
   }

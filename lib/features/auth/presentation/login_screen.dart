@@ -19,12 +19,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final _contrasenaController = TextEditingController();
   final authRepo = AuthRepository();
 
-  void _login() async {
-    Usuario? user = await authRepo.login(
+  Future<void> _login() async {
+    final user = await authRepo.login(
       _correoController.text,
       _contrasenaController.text,
     );
-
     if (user != null) {
       //Guardar usuario logueado localmente
       final prefs = await SharedPreferences.getInstance();
@@ -36,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Aquí irías a la pantalla principal de tu app
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
+        MaterialPageRoute(builder: (_) => HomeScreen(idUsuario: user.idUsuario!,)),
       );
 
     } else {

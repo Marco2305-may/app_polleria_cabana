@@ -6,9 +6,10 @@ import '../../pedidos/presentation/pedido_screen.dart';
 import '../../perfil/presentation/perfil_screen.dart';
 import '../../perfil/data/perfil_repository.dart';
 
-
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int idUsuario;
+
+  const HomeScreen({super.key, required this.idUsuario});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -16,10 +17,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  int _idUsuario = 1; // Id del usuario logueado
+  late UsuarioRepository _usuarioRepo;
 
   List<Widget>? _screens;
-  late UsuarioRepository _usuarioRepo;
 
   @override
   void initState() {
@@ -28,15 +28,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _initRepos() async {
-    final db = await DatabaseHelper.instance.database; // <- Usar polleria.db
+    final db = await DatabaseHelper.instance.database; // usar polleria.db
     _usuarioRepo = UsuarioRepository(db: db);
 
     setState(() {
       _screens = [
         MenuScreen(),
-        ReservacionScreen(idUsuario: _idUsuario),
+        ReservacionScreen(idUsuario: widget.idUsuario),
         PedidoScreen(),
-        PerfilScreen(idUsuario: _idUsuario, repo: _usuarioRepo),
+        PerfilScreen(idUsuario: widget.idUsuario, repo: _usuarioRepo),
       ];
     });
   }
@@ -74,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
 
 
 
